@@ -1,8 +1,10 @@
 package com.example.AtlazDB.controller;
 
+import com.example.AtlazDB.enums.TipoCombustivel;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-
+import com.example.AtlazDB.service.GerarCsv;
 import com.example.AtlazDB.model.Abastecimento;
 import com.example.AtlazDB.service.AbastecimentoService;
 
@@ -11,14 +13,32 @@ import com.example.AtlazDB.service.AbastecimentoService;
 public class AbastecimentoController {
 
     private final AbastecimentoService service;
+    private final GerarCsv gerarCsv;
 
-    public AbastecimentoController(AbastecimentoService service) {
+    public AbastecimentoController(AbastecimentoService service, GerarCsv gerarCsv) {
         this.service = service;
+        this.gerarCsv = gerarCsv;
     }
 
     @GetMapping
-    public List<Abastecimento> listar() {
-        return service.listarTodos();
+    public List<Abastecimento> buscar(
+            @RequestParam(required = false) TipoCombustivel tipoCombustivel,
+            @RequestParam(required = false) Double valorTotal,
+            @RequestParam(required = false) Double kmAtual
+    ) {
+        return service.buscarComFiltros(tipoCombustivel, valorTotal, kmAtual);
+    }
+
+
+    @GetMapping("/csv")
+    public ResponseEntity<byte[]> downloadCSV() {
+
+        byte[] csvBytes = gerarCsv.gerarCSV();
+
+        return ResponseEntity.ok()
+                .header("Content-Disposition", "attachment; filename=abastecimento.csv")
+                .header("Content-Type", "text/csv")
+                .body(csvBytes);
     }
 
     @GetMapping("/{id}")
