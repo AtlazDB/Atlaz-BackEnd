@@ -5,14 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e5128567-c074-4142-918d-5b2a7a229136" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/Atlaz-BackEnd.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/data_source_mapping.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/AtlazDB/src/main/java/com/example/AtlazDB/controller/AbastecimentoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/AtlazDB/src/main/java/com/example/AtlazDB/controller/AbastecimentoController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AtlazDB/src/main/java/com/example/AtlazDB/model/Abastecimento.java" beforeDir="false" afterPath="$PROJECT_DIR$/AtlazDB/src/main/java/com/example/AtlazDB/model/Abastecimento.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/AtlazDB/src/main/java/com/example/AtlazDB/repository/AbastecimentoRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/AtlazDB/src/main/java/com/example/AtlazDB/repository/AbastecimentoRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/AtlazDB/src/main/java/com/example/AtlazDB/service/AbastecimentoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/AtlazDB/src/main/java/com/example/AtlazDB/service/AbastecimentoService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/AtlazDB/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/AtlazDB/src/main/resources/application.properties" afterDir="false" />
@@ -37,6 +33,10 @@
     &quot;accountId&quot;: &quot;a2c1e206-ed25-4d96-8642-e63742e15570&quot;
   }
 }</component>
+  <component name="KubernetesApiPersistence"><![CDATA[{}]]></component>
+  <component name="KubernetesApiProvider"><![CDATA[{
+  "isMigrated": true
+}]]></component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
@@ -54,6 +54,8 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Docker.AtlazDB/compose.yaml.postgres: Compose Deployment.executor": "Run",
+    "Docker.AtlazDB/compose.yaml: Compose Deployment.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RequestMappingsPanelOrder0": "0",
     "RequestMappingsPanelOrder1": "1",
@@ -65,7 +67,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Spring Boot.Application.executor": "Run",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "feat/endpoint-get",
+    "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
@@ -77,9 +79,14 @@
     "nodejs_package_manager_path": "npm",
     "to.speed.mode.migration.done": "true",
     "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
+    ]
   }
 }]]></component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Spring Boot.Application">
     <configuration name="Application" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="AtlazDB" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.AtlazDB.Application" />
@@ -87,6 +94,37 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="AtlazDB/compose.yaml: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="sourceFilePath" value="AtlazDB/compose.yaml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="AtlazDB/compose.yaml.postgres: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="postgres" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="AtlazDB/compose.yaml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
+      <deployment type="docker-compose.yml" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Docker.AtlazDB/compose.yaml: Compose Deployment" />
+        <item itemvalue="Docker.AtlazDB/compose.yaml.postgres: Compose Deployment" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -105,6 +143,7 @@
       <updated>1774583947747</updated>
       <workItem from="1774583948978" duration="715000" />
       <workItem from="1774725807713" duration="5472000" />
+      <workItem from="1774994415998" duration="5905000" />
     </task>
     <servers />
   </component>
