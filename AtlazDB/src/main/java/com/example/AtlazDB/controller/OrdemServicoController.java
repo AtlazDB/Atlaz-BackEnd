@@ -1,5 +1,7 @@
 package com.example.AtlazDB.controller;
 
+import com.example.AtlazDB.dto.OrdemServicoRequestDTO;
+import com.example.AtlazDB.enums.TipoOcorrencia;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -21,20 +23,24 @@ public class OrdemServicoController {
         return service.listarTodos();
     }
 
+    @GetMapping("/tipos-ocorrencia")
+    public TipoOcorrencia[] listarTipos() {
+        return TipoOcorrencia.values();
+    }
+
     @GetMapping("/{id}")
     public OrdemServico buscarPorId(@PathVariable Long id) {
         return service.buscarPorId(id).orElse(null);
     }
 
     @PostMapping
-    public OrdemServico criar(@RequestBody OrdemServico os) {
-        return service.salvar(os);
+    public OrdemServico criar(@RequestBody OrdemServicoRequestDTO dto) {
+        return service.salvar(dto);
     }
 
     @PutMapping("/{id}")
-    public OrdemServico atualizar(@PathVariable Long id, @RequestBody OrdemServico os) {
-        os.setId(id);
-        return service.salvar(os);
+    public OrdemServico atualizar(@PathVariable Long id, @RequestBody OrdemServicoRequestDTO dto) {
+        return service.atualizar(id,dto);
     }
 
     @DeleteMapping("/{id}")
