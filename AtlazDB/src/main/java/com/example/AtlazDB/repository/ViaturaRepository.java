@@ -1,11 +1,11 @@
 package com.example.AtlazDB.repository;
 
+import com.example.AtlazDB.model.Vehicle;
 import org.springframework.data.jpa.repository.JpaRepository;
-import com.example.AtlazDB.model.Viatura;
 
 import java.util.Optional;
 
-public interface ViaturaRepository extends JpaRepository<Viatura, Long> {
+public interface ViaturaRepository extends JpaRepository<Vehicle, Long> {
 
-    Optional<Viatura> findByPrefixo(String prefixo);
+    Optional<Vehicle> findByPrefixo(String prefixo);
 }

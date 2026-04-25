@@ -1,7 +1,7 @@
 package com.example.AtlazDB.repository;
 
+import com.example.AtlazDB.model.Model;
 import org.springframework.data.jpa.repository.JpaRepository;
-import com.example.AtlazDB.model.Modelo;
 
-public interface ModeloRepository extends JpaRepository<Modelo, Long> {
+public interface ModeloRepository extends JpaRepository<Model, Long> {
 }

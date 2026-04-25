@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class AbastecimentoControllerTest {
+class FuelControllerTest {
 
     @Autowired private MockMvc mockMvc;
     @Autowired private UsuarioRepository usuarioRepository;
@@ -30,7 +30,7 @@ class AbastecimentoControllerTest {
     @Autowired private ViaturaRepository viaturaRepository;
     @Autowired private CidadeRepository cidadeRepository;
     @Autowired private OrdemServicoRepository ordemServicoRepository;
-    @Autowired private AbastecimentoRepository abastecimentoRepository;
+    @Autowired private FuelRepository fuelRepository;
 
     private Long idUsuario;
     private Long idViatura;
@@ -40,52 +40,52 @@ class AbastecimentoControllerTest {
     @BeforeEach
     void setup() {
         // limpa na ordem certa por causa das FK
-        abastecimentoRepository.deleteAll();
+        fuelRepository.deleteAll();
         ordemServicoRepository.deleteAll();
         cidadeRepository.deleteAll();
         viaturaRepository.deleteAll();
         usuarioRepository.deleteAll();
         modeloRepository.deleteAll();
 
-        Usuario usuario = new Usuario();
-        usuario.setNome("Teste");
-        usuario.setMatricula("000001");
-        usuario.setEmail("teste@email.com");
-        usuario.setSenhaHash("senha");
-        usuario.setPerfil(Perfil.ADMIN);
-        usuario.setUsuarioStatus(UsuarioStatus.ATIVO);
-        idUsuario = usuarioRepository.save(usuario).getId();
+        User user = new User();
+        user.setNome("Teste");
+        user.setMatricula("000001");
+        user.setEmail("teste@email.com");
+        user.setSenhaHash("senha");
+        user.setPerfil(Perfil.ADMIN);
+        user.setUsuarioStatus(UsuarioStatus.ATIVO);
+        idUsuario = usuarioRepository.save(user).getId();
 
-        Modelo modelo = new Modelo();
-        modelo.setNomeModelo("Prisma");
-        modelo.setNomeMarca("Chevrolet");
-        Modelo modeloSalvo = modeloRepository.save(modelo);
+        Model model = new Model();
+        model.setNomeModelo("Prisma");
+        model.setNomeMarca("Chevrolet");
+        Model modelSalvo = modeloRepository.save(model);
 
-        Viatura viatura = new Viatura();
-        viatura.setPrefixo("US01");
-        viatura.setTipo(TipoViatura.UTILITARIO);
-        viatura.setViaturaStatus(ViaturaStatus.ATIVO);
-        viatura.setModelo(modeloSalvo);
-        idViatura = viaturaRepository.save(viatura).getId();
+        Vehicle vehicle = new Vehicle();
+        vehicle.setPrefixo("US01");
+        vehicle.setTipo(TipoViatura.UTILITARIO);
+        vehicle.setViaturaStatus(ViaturaStatus.ATIVO);
+        vehicle.setModel(modelSalvo);
+        idViatura = viaturaRepository.save(vehicle).getId();
 
-        Cidade cidade = new Cidade();
-        cidade.setNome("São José dos Campos");
-        cidade.setUf("SP");
-        idCidade = cidadeRepository.save(cidade).getId();
+        City city = new City();
+        city.setNome("São José dos Campos");
+        city.setUf("SP");
+        idCidade = cidadeRepository.save(city).getId();
 
-        OrdemServico os = new OrdemServico();
-        os.setTipoServico(TipoOcorrencia.ADMINISTRATIVO);
+        OrderService os = new OrderService();
+        os.setTipoServico(TypeOccurrence.ADMINISTRATIVO);
         os.setLocalDestino("Taubaté");
         os.setRequisitante("Teste");
         os.setKmSaida(new BigDecimal("100"));
         os.setDataSaida(LocalDateTime.now());
-        os.setUsuario(usuarioRepository.findById(idUsuario).get());
-        os.setViatura(viaturaRepository.findById(idViatura).get());
+        os.setUser(usuarioRepository.findById(idUsuario).get());
+        os.setVehicle(viaturaRepository.findById(idViatura).get());
         idOs = ordemServicoRepository.save(os).getId();
     }
 
     @Test
-    void deveCriarAbastecimento() throws Exception {
+    void deveCreateAbastecimento() throws Exception {
         mockMvc.perform(post("/abastecimentos")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""

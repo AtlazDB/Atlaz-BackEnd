@@ -1,4 +1,4 @@
-CREATE TABLE usuario (
+CREATE TABLE user (
                          id_usuario BIGSERIAL PRIMARY KEY,
                          nome VARCHAR(100) NOT NULL,
                          matricula VARCHAR(50) UNIQUE NOT NULL,
@@ -8,26 +8,26 @@ CREATE TABLE usuario (
                          usuario_status VARCHAR(20) DEFAULT 'ATIVO' CHECK (usuario_status IN ('ATIVO', 'INATIVO'))
 );
 
-CREATE TABLE cidade (
+CREATE TABLE city (
                         id_cidade BIGSERIAL PRIMARY KEY,
                         nome VARCHAR(100) NOT NULL,
                         uf VARCHAR(2) NOT NULL
 );
 
-CREATE TABLE modelo (
+CREATE TABLE model (
                         id_modelo BIGSERIAL PRIMARY KEY,
                         nome_modelo VARCHAR(100) NOT NULL,
                         nome_marca VARCHAR(100) NOT NULL
 );
 
-CREATE TABLE viatura (
+CREATE TABLE vehicle (
                          id_viatura BIGSERIAL PRIMARY KEY,
                          prefixo VARCHAR(50) UNIQUE NOT NULL,
                          tipo VARCHAR(50) NOT NULL CHECK (tipo IN ('UTILITARIO', 'PASSEIO')),
                          viatura_status VARCHAR(20) DEFAULT 'ATIVO' CHECK (viatura_status IN ('ATIVO', 'INATIVO', 'MANUTENCAO')),
                          id_modelo BIGINT NOT NULL,
                          CONSTRAINT fk_viatura_modelo FOREIGN KEY (id_modelo)
-                             REFERENCES modelo (id_modelo) ON DELETE RESTRICT
+                             REFERENCES model (id_modelo) ON DELETE RESTRICT
 );
 
 CREATE TABLE ordem_servico (
@@ -44,12 +44,12 @@ CREATE TABLE ordem_servico (
                                id_usuario BIGINT NOT NULL,
                                id_viatura BIGINT NOT NULL,
                                CONSTRAINT fk_os_usuario FOREIGN KEY (id_usuario)
-                                   REFERENCES usuario (id_usuario) ON DELETE RESTRICT,
+                                   REFERENCES user (id_usuario) ON DELETE RESTRICT,
                                CONSTRAINT fk_os_viatura FOREIGN KEY (id_viatura)
-                                   REFERENCES viatura (id_viatura) ON DELETE RESTRICT
+                                   REFERENCES vehicle (id_viatura) ON DELETE RESTRICT
 );
 
-CREATE TABLE abastecimento (
+CREATE TABLE fuel (
                                id_abastecimento BIGSERIAL PRIMARY KEY,
                                data_hora TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
                                km_atual NUMERIC(10, 2),
@@ -63,15 +63,15 @@ CREATE TABLE abastecimento (
                                id_cidade BIGINT NOT NULL,
                                id_os BIGINT,
                                CONSTRAINT fk_abast_usuario FOREIGN KEY (id_usuario)
-                                   REFERENCES usuario (id_usuario) ON DELETE RESTRICT,
+                                   REFERENCES user (id_usuario) ON DELETE RESTRICT,
                                CONSTRAINT fk_abast_viatura FOREIGN KEY (id_viatura)
-                                   REFERENCES viatura (id_viatura) ON DELETE RESTRICT,
+                                   REFERENCES vehicle (id_viatura) ON DELETE RESTRICT,
                                CONSTRAINT fk_abast_cidade FOREIGN KEY (id_cidade)
-                                   REFERENCES cidade (id_cidade) ON DELETE RESTRICT,
+                                   REFERENCES city (id_cidade) ON DELETE RESTRICT,
                                CONSTRAINT fk_abast_os FOREIGN KEY (id_os)
                                    REFERENCES ordem_servico (id_os) ON DELETE SET NULL
 );
 
-CREATE INDEX idx_abastecimento_viatura ON abastecimento(id_viatura);
-CREATE INDEX idx_abastecimento_data ON abastecimento(data_hora);
+CREATE INDEX idx_abastecimento_viatura ON fuel(id_viatura);
+CREATE INDEX idx_abastecimento_data ON fuel(data_hora);
 CREATE INDEX idx_os_viatura ON ordem_servico(id_viatura);
