@@ -1,5 +1,6 @@
 package com.example.AtlazDB.controller;
 
+import com.example.AtlazDB.dto.VehicleResponseDTO;
 import com.example.AtlazDB.dto.ViaturaRequestDTO;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -18,13 +19,13 @@ public class ViaturaController {
     }
 
     @GetMapping
-    public List<Viatura> listar() {
+    public List<VehicleResponseDTO> listar() {
         return service.listarTodos();
     }
 
     @GetMapping("/{id}")
-    public Viatura buscarPorId(@PathVariable Long id) {
-        return service.buscarPorId(id).orElse(null);
+    public VehicleResponseDTO buscarPorId(@PathVariable Long id) {
+        return service.buscarPorId(id);
     }
 
     @PostMapping
