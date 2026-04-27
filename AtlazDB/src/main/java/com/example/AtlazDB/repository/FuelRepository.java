@@ -11,16 +11,16 @@ import java.util.List;
 
 public interface FuelRepository extends JpaRepository<Fuel, Long> {
 
-    List<Fuel> findByTipoCombustivel(TypeFuel typeFuel);
+    List<Fuel> findByTypeFuel(TypeFuel typeFuel);
 
-    List<Fuel> findByValorTotalGreaterThan(Double valorTotal);
+    List<Fuel> findByTotalValueGreaterThan(Double totalValue);
 
-    List<Fuel> findByKmAtualGreaterThan(Double kmAtual);
+    List<Fuel> findByCurrentKmGreaterThan(Double currentKm);
 
 
 
     @Query("SELECT a FROM Abastecimento a WHERE a.dataHora >= :inicio AND a.dataHora < :fim")
-    List<Fuel> buscarPorPeriodo(
-            @Param("inicio") LocalDateTime inicio,
-            @Param("fim") LocalDateTime fim);
+    List<Fuel> searchByPeriod(
+            @Param("start") LocalDateTime start,
+            @Param("end") LocalDateTime end);
 }

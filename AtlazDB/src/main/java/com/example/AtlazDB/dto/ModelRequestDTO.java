@@ -6,6 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ModelRequestDTO {
-    private String nomeModelo;
-    private String nomeMarca;
+    private String nameModel;
+    private String nameBrand;
 }

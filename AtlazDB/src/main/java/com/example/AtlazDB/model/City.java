@@ -13,7 +13,7 @@ public class City {
     @Column(name = "id_cidade")
     private Long id;
 
-    private String nome;
+    private String name;
 
     private String uf;
 }

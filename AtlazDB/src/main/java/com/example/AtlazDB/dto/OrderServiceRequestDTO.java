@@ -11,16 +11,16 @@ import java.time.LocalDateTime;
 @Setter
 public class OrderServiceRequestDTO {
 
-    private TypeOccurrence tipoServico;
-    private String localDestino;
-    private String justificativa;
-    private String requisitante;
-    private BigDecimal kmSaida;
-    private BigDecimal kmChegada;
-    private LocalDateTime dataSaida;
-    private LocalDateTime dataRetorno;
-    private Long idUsuario;
-    private Long idViatura;
+    private TypeOccurrence typeService;
+    private String localDestiny;
+    private String justification;
+    private String requisition;
+    private BigDecimal leaveKm;
+    private BigDecimal arriveKm;
+    private LocalDateTime leaveDate;
+    private LocalDateTime returnDate;
+    private Long idUser;
+    private Long idVehicle;
 
 
 }

@@ -12,26 +12,26 @@ import com.example.AtlazDB.dto.FuelResponseDTO;
 import com.example.AtlazDB.enums.TypeFuel;
 import com.example.AtlazDB.model.Fuel;
 import com.example.AtlazDB.repository.FuelRepository;
-import com.example.AtlazDB.repository.CidadeRepository;
-import com.example.AtlazDB.repository.OrdemServicoRepository;
-import com.example.AtlazDB.repository.UsuarioRepository;
-import com.example.AtlazDB.repository.ViaturaRepository;
+import com.example.AtlazDB.repository.CityRepository;
+import com.example.AtlazDB.repository.OrderServiceRepository;
+import com.example.AtlazDB.repository.UserRepository;
+import com.example.AtlazDB.repository.VehicleRepository;
 
 @Service
 public class FuelService {
 
     private final FuelRepository repository;
-    private final UsuarioRepository usuarioRepository;
-    private final ViaturaRepository viaturaRepository;
-    private final CidadeRepository cidadeRepository;
-    private final OrdemServicoRepository ordemServicoRepository;
+    private final UserRepository userRepository;
+    private final VehicleRepository vehicleRepository;
+    private final CityRepository cityRepository;
+    private final OrderServiceRepository orderServiceRepository;
 
-    public FuelService(FuelRepository repository, UsuarioRepository usuarioRepository, ViaturaRepository viaturaRepository, CidadeRepository cidadeRepository, OrdemServicoRepository ordemServicoRepository) {
+    public FuelService(FuelRepository repository, UserRepository userRepository, VehicleRepository vehicleRepository, CityRepository cityRepository, OrderServiceRepository orderServiceRepository) {
         this.repository = repository;
-        this.usuarioRepository = usuarioRepository;
-        this.viaturaRepository = viaturaRepository;
-        this.cidadeRepository = cidadeRepository;
-        this.ordemServicoRepository = ordemServicoRepository;
+        this.userRepository = userRepository;
+        this.vehicleRepository = vehicleRepository;
+        this.cityRepository = cityRepository;
+        this.orderServiceRepository = orderServiceRepository;
     }
 
     public List<Fuel> listAll() {
@@ -43,17 +43,17 @@ public class FuelService {
     }
 
     public Fuel save(FuelRequestDTO dto) {
-        User user = usuarioRepository.findById(dto.getIdUsuario()).orElseThrow(()-> new RuntimeException("User não encontrado."));
-        Vehicle vehicle = viaturaRepository.findById(dto.getIdViatura()).orElseThrow(()-> new RuntimeException("Vehicle não encontrada."));
-        City city = cidadeRepository.findById(dto.getIdCidade()).orElseThrow(()-> new RuntimeException("City não encontrada."));
-        OrderService os = ordemServicoRepository.findById(dto.getIdOs()).orElseThrow(()-> new RuntimeException("Ordem de serviço não encontrada."));
+        User user = userRepository.findById(dto.getIdUser()).orElseThrow(()-> new RuntimeException("User não encontrado."));
+        Vehicle vehicle = vehicleRepository.findById(dto.getIdVehicle()).orElseThrow(()-> new RuntimeException("Vehicle não encontrada."));
+        City city = cityRepository.findById(dto.getIdCity()).orElseThrow(()-> new RuntimeException("City não encontrada."));
+        OrderService os = orderServiceRepository.findById(dto.getIdOs()).orElseThrow(()-> new RuntimeException("Ordem de serviço não encontrada."));
 
         Fuel fuel = new Fuel();
-        fuel.setValorTotal(dto.getValorTotal());
-        fuel.setCurrentKm(os.getKmChegada());
-        fuel.setLitros(dto.getLitros());
-        fuel.setDateHour(dto.getDataHora());
-        fuel.setNumeroNotaFiscal(dto.getNumeroNotaFiscal());
+        fuel.setTotalValue(dto.getTotalValue());
+        fuel.setCurrentKm(os.getArriveKm());
+        fuel.setLiters(dto.getLiters());
+        fuel.setDateHour(dto.getDateHour());
+        fuel.setNumberReceipt(dto.getNumberReceipt());
         fuel.setUser(user);
         fuel.setVehicle(vehicle);
         fuel.setCity(city);
@@ -68,38 +68,38 @@ public class FuelService {
 
     public List<Fuel> searchWithFilters(
             TypeFuel typeFuel,
-            Double valorTotal,
-            Double kmAtual
+            Double totalValue,
+            Double currentKm
     ) {
 
         if (typeFuel != null) {
-            return repository.findByTipoCombustivel(typeFuel);
+            return repository.findByTypeFuel(typeFuel);
         }
 
-        if (valorTotal != null) {
-            return repository.findByValorTotalGreaterThan(valorTotal);
+        if (totalValue != null) {
+            return repository.findByTotalValueGreaterThan(totalValue);
         }
 
-        if (kmAtual != null) {
-            return repository.findByKmAtualGreaterThan(kmAtual);
+        if (currentKm != null) {
+            return repository.findByCurrentKmGreaterThan(currentKm);
         }
 
         return repository.findAll();
     }
 
     public Fuel update(Long id, FuelRequestDTO dto) {
-        User user = usuarioRepository.findById(dto.getIdUsuario()).orElseThrow(()-> new RuntimeException("User não encontrado."));
-        Vehicle vehicle = viaturaRepository.findById(dto.getIdViatura()).orElseThrow(()-> new RuntimeException("Vehicle não encontrada."));
-        City city = cidadeRepository.findById(dto.getIdCidade()).orElseThrow(()-> new RuntimeException("City não encontrada."));
-        Fuel fuel = repository.findById(id).orElseThrow(()-> new RuntimeException("Fuel não encontrado."));
-        OrderService os = ordemServicoRepository.findById(dto.getIdOs()).orElseThrow(()-> new RuntimeException("Ordem de serviço não encontrada."));
+        User user = userRepository.findById(dto.getIdUser()).orElseThrow(()-> new RuntimeException("User not found."));
+        Vehicle vehicle = vehicleRepository.findById(dto.getIdVehicle()).orElseThrow(()-> new RuntimeException("Vehicle not found."));
+        City city = cityRepository.findById(dto.getIdCity()).orElseThrow(()-> new RuntimeException("City not found."));
+        Fuel fuel = repository.findById(id).orElseThrow(()-> new RuntimeException("Fuel not found."));
+        OrderService os = orderServiceRepository.findById(dto.getIdOs()).orElseThrow(()-> new RuntimeException("Service Order not found."));
 
 
-        fuel.setValorTotal(dto.getValorTotal());
-        fuel.setCurrentKm(os.getKmChegada());
-        fuel.setLitros(dto.getLitros());
-        fuel.setDateHour(dto.getDataHora());
-        fuel.setNumeroNotaFiscal(dto.getNumeroNotaFiscal());
+        fuel.setTotalValue(dto.getTotalValue());
+        fuel.setCurrentKm(os.getArriveKm());
+        fuel.setLiters(dto.getLiters());
+        fuel.setDateHour(dto.getDateHour());
+        fuel.setNumberReceipt(dto.getNumberReceipt());
         fuel.setUser(user);
         fuel.setVehicle(vehicle);
         fuel.setCity(city);
@@ -108,18 +108,18 @@ public class FuelService {
         return repository.save(fuel);
 
     }
-    public List<Fuel> searchByMonthAndYear(int mes, int ano) {
+    public List<Fuel> searchByMonthAndYear(int month, int year) {
 
-        LocalDateTime inicio = LocalDateTime.of(ano, mes, 1, 0, 0);
-        LocalDateTime fim = inicio.plusMonths(1); // início do mês seguinte, exclusive
+        LocalDateTime start = LocalDateTime.of(year, month, 1, 0, 0);
+        LocalDateTime end = start.plusMonths(1); // start of the next month, exclusive
 
-        return repository.buscarPorPeriodo(inicio, fim);
+        return repository.searchByPeriod(start, end);
     }
 
     public List<FuelResponseDTO> list() {
-        List<Fuel> lista = repository.findAll();
+        List<Fuel> list = repository.findAll();
 
-        return lista.stream()
+        return list.stream()
                 .map(FuelResponseDTO::fromEntity)
                 .toList();
     }

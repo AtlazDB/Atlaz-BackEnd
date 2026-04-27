@@ -18,7 +18,7 @@ import com.example.AtlazDB.dto.CityResponseDTO;
 import com.example.AtlazDB.service.CityService;
 
 @RestController
-@RequestMapping("/cidades")
+@RequestMapping("/cities")
 public class CityController {
 
     private final CityService service;
@@ -40,7 +40,7 @@ public class CityController {
 
     @GetMapping("/{id}")
     public ResponseEntity<CityResponseDTO> searchById(@PathVariable Long id) {
-        return service.buscarPorId(id)
+        return service.searchById(id)
                 .map(CityResponseDTO::new)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());

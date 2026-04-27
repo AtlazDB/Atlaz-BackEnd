@@ -7,18 +7,18 @@ import org.springframework.stereotype.Service;
 
 import com.example.AtlazDB.dto.ModelRequestDTO;
 import com.example.AtlazDB.model.Model;
-import com.example.AtlazDB.repository.ModeloRepository;
+import com.example.AtlazDB.repository.ModelRepository;
 
 @Service
 public class ModelService {
 
-    private final ModeloRepository repository;
+    private final ModelRepository repository;
 
-    public ModelService(ModeloRepository repository) {
+    public ModelService(ModelRepository repository) {
         this.repository = repository;
     }
 
-    public List<Model> listarTodos() {
+    public List<Model> listAll() {
         return repository.findAll();
     }
 
@@ -28,8 +28,8 @@ public class ModelService {
 
     public Model save(ModelRequestDTO dto) {
         Model model = new Model();
-        model.setNomeModelo(dto.getNomeModelo());
-        model.setNomeMarca(dto.getNomeMarca());
+        model.setNameModel(dto.getNameModel());
+        model.setNameBrand(dto.getNameBrand());
         return repository.save(model);
     }
 
@@ -38,9 +38,9 @@ public class ModelService {
     }
 
     public Model update(Long id, ModelRequestDTO dto) {
-        Model model = repository.findById(id).orElseThrow(()-> new RuntimeException("Model não encontrado"));
-        model.setNomeModelo(dto.getNomeModelo());
-        model.setNomeMarca(dto.getNomeMarca());
+        Model model = repository.findById(id).orElseThrow(()-> new RuntimeException("Model not found"));
+        model.setNameModel(dto.getNameModel());
+        model.setNameBrand(dto.getNameBrand());
         return repository.save(model);
     }
 }

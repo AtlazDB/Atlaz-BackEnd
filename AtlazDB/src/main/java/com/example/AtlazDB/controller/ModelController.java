@@ -10,7 +10,7 @@ import com.example.AtlazDB.model.Model;
 import com.example.AtlazDB.service.ModelService;
 
 @RestController
-@RequestMapping("/modelos")
+@RequestMapping("/models")
 public class ModelController {
 
     private final ModelService service;
@@ -21,7 +21,7 @@ public class ModelController {
 
     @GetMapping
     public ResponseEntity<List<ModelResponseDTO>> list() {
-        List<Model> list = service.listarTodos();
+        List<Model> list = service.listAll();
         
         List<ModelResponseDTO> dtoList = list.stream()
                 .map(ModelResponseDTO::new)

@@ -14,14 +14,14 @@ public class Vehicle {
     @Column(name = "id_viatura")
     private Long id;
 
-    private String prefixo;
+    private String prefix;
 
     @Enumerated(EnumType.STRING)
-    private TipoViatura tipo;
+    private TipoViatura type;
 
     @Column(name = "viatura_status")
     @Enumerated(EnumType.STRING)
-    private ViaturaStatus viaturaStatus;
+    private VehicleStatus vehicleStatus;
 
     @ManyToOne
     @JoinColumn(name = "id_modelo")

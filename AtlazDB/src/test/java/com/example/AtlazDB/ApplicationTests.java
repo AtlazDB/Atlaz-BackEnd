@@ -25,11 +25,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class FuelControllerTest {
 
     @Autowired private MockMvc mockMvc;
-    @Autowired private UsuarioRepository usuarioRepository;
-    @Autowired private ModeloRepository modeloRepository;
-    @Autowired private ViaturaRepository viaturaRepository;
-    @Autowired private CidadeRepository cidadeRepository;
-    @Autowired private OrdemServicoRepository ordemServicoRepository;
+    @Autowired private UserRepository userRepository;
+    @Autowired private ModelRepository modelRepository;
+    @Autowired private VehicleRepository vehicleRepository;
+    @Autowired private CityRepository cityRepository;
+    @Autowired private OrderServiceRepository orderServiceRepository;
     @Autowired private FuelRepository fuelRepository;
 
     private Long idUsuario;
@@ -41,47 +41,47 @@ class FuelControllerTest {
     void setup() {
         // limpa na ordem certa por causa das FK
         fuelRepository.deleteAll();
-        ordemServicoRepository.deleteAll();
-        cidadeRepository.deleteAll();
-        viaturaRepository.deleteAll();
-        usuarioRepository.deleteAll();
-        modeloRepository.deleteAll();
+        orderServiceRepository.deleteAll();
+        cityRepository.deleteAll();
+        vehicleRepository.deleteAll();
+        userRepository.deleteAll();
+        modelRepository.deleteAll();
 
         User user = new User();
-        user.setNome("Teste");
-        user.setMatricula("000001");
+        user.setName("Teste");
+        user.setRegistration("000001");
         user.setEmail("teste@email.com");
-        user.setSenhaHash("senha");
-        user.setPerfil(Perfil.ADMIN);
-        user.setUsuarioStatus(UsuarioStatus.ATIVO);
-        idUsuario = usuarioRepository.save(user).getId();
+        user.setPasswordHash("senha");
+        user.setProfile(Perfil.ADMIN);
+        user.setUserStatus(UserStatus.ATIVO);
+        idUsuario = userRepository.save(user).getId();
 
         Model model = new Model();
-        model.setNomeModelo("Prisma");
-        model.setNomeMarca("Chevrolet");
-        Model modelSalvo = modeloRepository.save(model);
+        model.setNameModel("Prisma");
+        model.setNameBrand("Chevrolet");
+        Model modelSalvo = modelRepository.save(model);
 
         Vehicle vehicle = new Vehicle();
-        vehicle.setPrefixo("US01");
-        vehicle.setTipo(TipoViatura.UTILITARIO);
-        vehicle.setViaturaStatus(ViaturaStatus.ATIVO);
+        vehicle.setPrefix("US01");
+        vehicle.setType(TipoViatura.UTILITARIO);
+        vehicle.setVehicleStatus(VehicleStatus.ATIVO);
         vehicle.setModel(modelSalvo);
-        idViatura = viaturaRepository.save(vehicle).getId();
+        idViatura = vehicleRepository.save(vehicle).getId();
 
         City city = new City();
-        city.setNome("São José dos Campos");
+        city.setName("São José dos Campos");
         city.setUf("SP");
-        idCidade = cidadeRepository.save(city).getId();
+        idCidade = cityRepository.save(city).getId();
 
         OrderService os = new OrderService();
-        os.setTipoServico(TypeOccurrence.ADMINISTRATIVO);
-        os.setLocalDestino("Taubaté");
-        os.setRequisitante("Teste");
-        os.setKmSaida(new BigDecimal("100"));
-        os.setDataSaida(LocalDateTime.now());
-        os.setUser(usuarioRepository.findById(idUsuario).get());
-        os.setVehicle(viaturaRepository.findById(idViatura).get());
-        idOs = ordemServicoRepository.save(os).getId();
+        os.setTypeService(TypeOccurrence.ADMINISTRATIVO);
+        os.setLocalDestiny("Taubaté");
+        os.setRequisition("Teste");
+        os.setLeaveKm(new BigDecimal("100"));
+        os.setLeaveDate(LocalDateTime.now());
+        os.setUser(userRepository.findById(idUsuario).get());
+        os.setVehicle(vehicleRepository.findById(idViatura).get());
+        idOs = orderServiceRepository.save(os).getId();
     }
 
     @Test
@@ -150,7 +150,7 @@ class FuelControllerTest {
         mockMvc.perform(get("/viaturas"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray())
-                .andExpect(jsonPath("$[0].prefixo").value("US01"));
+                .andExpect(jsonPath("$[0].prefix").value("US01"));
     }
 
     @Test

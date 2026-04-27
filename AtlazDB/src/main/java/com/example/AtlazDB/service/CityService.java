@@ -7,14 +7,14 @@ import com.example.AtlazDB.model.City;
 import org.springframework.stereotype.Service;
 
 import com.example.AtlazDB.dto.CityRequestDTO;
-import com.example.AtlazDB.repository.CidadeRepository;
+import com.example.AtlazDB.repository.CityRepository;
 
 @Service
 public class CityService {
 
-    private final CidadeRepository repository;
+    private final CityRepository repository;
 
-    public CityService(CidadeRepository repository) {
+    public CityService(CityRepository repository) {
         this.repository = repository;
     }
 
@@ -22,13 +22,13 @@ public class CityService {
         return repository.findAll();
     }
 
-    public Optional<City> buscarPorId(Long id) {
+    public Optional<City> searchById(Long id) {
         return repository.findById(id);
     }
 
     public City save(CityRequestDTO dto) {
         City city = new City();
-        city.setNome(dto.getNome());
+        city.setName(dto.getName());
         city.setUf(dto.getUf());
         return repository.save(city);
     }
@@ -38,8 +38,8 @@ public class CityService {
     }
 
     public City update(Long id, CityRequestDTO dto) {
-        City city = repository.findById(id).orElseThrow(()-> new RuntimeException("City não encontrada"));
-        city.setNome(dto.getNome());
+        City city = repository.findById(id).orElseThrow(()-> new RuntimeException("City not found"));
+        city.setName(dto.getName());
         city.setUf(dto.getUf());
         return repository.save(city);
     }

@@ -1,20 +1,20 @@
 package com.example.AtlazDB.service;
 
 import com.example.AtlazDB.dto.UserRequestDTO;
-import com.example.AtlazDB.enums.UsuarioStatus;
+import com.example.AtlazDB.enums.UserStatus;
 import com.example.AtlazDB.model.User;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-import com.example.AtlazDB.repository.UsuarioRepository;
+import com.example.AtlazDB.repository.UserRepository;
 
 @Service
 public class UserService {
 
-    private final UsuarioRepository repository;
+    private final UserRepository repository;
 
-    public UserService(UsuarioRepository repository) {
+    public UserService(UserRepository repository) {
         this.repository = repository;
     }
 
@@ -22,19 +22,19 @@ public class UserService {
         return repository.findAll();
     }
 
-    public Optional<User> buscarPorId(Long id) {
+    public Optional<User> searchById(Long id) {
         return repository.findById(id);
     }
 
     public User save(UserRequestDTO dto) {
         User user = new User();
 
-        user.setNome(dto.getNome());
-        user.setMatricula(dto.getMatricula());
-        user.setSenhaHash(dto.getSenhaHash());
+        user.setName(dto.getName());
+        user.setRegistration(dto.getRegistration());
+        user.setPasswordHash(dto.getPasswordHash());
         user.setEmail(dto.getEmail());
-        user.setPerfil((dto.getPerfil()));
-        user.setUsuarioStatus(UsuarioStatus.ATIVO);
+        user.setProfile((dto.getProfile()));
+        user.setUserStatus(UserStatus.ATIVO);
         return repository.save(user);
     }
 
@@ -43,13 +43,13 @@ public class UserService {
     }
 
     public User update(Long id, UserRequestDTO dto) {
-        User user = repository.findById(id).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
-        user.setNome(dto.getNome());
-        user.setMatricula(dto.getMatricula());
-        user.setSenhaHash(dto.getSenhaHash());
+        User user = repository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+        user.setName(dto.getName());
+        user.setRegistration(dto.getRegistration());
+        user.setPasswordHash(dto.getPasswordHash());
         user.setEmail(dto.getEmail());
-        user.setPerfil(dto.getPerfil());
-        user.setUsuarioStatus(UsuarioStatus.ATIVO);
+        user.setProfile(dto.getProfile());
+        user.setUserStatus(UserStatus.ATIVO);
         return repository.save(user);
     }
 }

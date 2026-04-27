@@ -4,15 +4,15 @@ import com.example.AtlazDB.model.Model;
 
 public record ModelResponseDTO(
         Long id,
-        String nomeModelo,
-        String nomeMarca
+        String nameModel,
+        String nameBrand
 ) {
     // Construtor para converter a Entidade em DTO
     public ModelResponseDTO(Model model) {
         this(
                 model.getId(),
-                model.getNomeModelo(),
-                model.getNomeMarca()
+                model.getNameModel(),
+                model.getNameBrand()
         );
     }
 }

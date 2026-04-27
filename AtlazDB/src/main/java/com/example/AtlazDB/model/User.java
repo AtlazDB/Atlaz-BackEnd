@@ -1,7 +1,7 @@
 package com.example.AtlazDB.model;
 
 import com.example.AtlazDB.enums.Perfil;
-import com.example.AtlazDB.enums.UsuarioStatus;
+import com.example.AtlazDB.enums.UserStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -15,20 +15,20 @@ public class User {
     @Column(name = "id_usuario")
     private Long id;
 
-    private String nome;
+    private String name;
 
-    private String matricula;
+    private String registration;
 
     private String email;
 
     @Column(name = "senha_hash")
-    private String senhaHash;
+    private String passwordHash;
 
     @Enumerated(EnumType.STRING)
-    private Perfil perfil;
+    private Perfil profile;
 
     @Column(name = "usuario_status")
     @Enumerated(EnumType.STRING)
-    private UsuarioStatus usuarioStatus;
+    private UserStatus userStatus;
 
  }

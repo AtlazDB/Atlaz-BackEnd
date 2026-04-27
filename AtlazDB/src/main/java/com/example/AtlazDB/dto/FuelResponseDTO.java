@@ -14,16 +14,16 @@ import java.time.LocalDateTime;
 public class FuelResponseDTO {
 
     private Long id;
-    private LocalDateTime data;
-    private BigDecimal valor;
-    private String numeroNotaFiscal;
+    private LocalDateTime date;
+    private BigDecimal value;
+    private String numberReceipt;
 
-    public static FuelResponseDTO fromEntity(Fuel abast) {
+    public static FuelResponseDTO fromEntity(Fuel fuel) {
         return new FuelResponseDTO(
-                abast.getId(),
-                abast.getDateHour(),
-                abast.getValorTotal(),
-                abast.getNumeroNotaFiscal()
+                fuel.getId(),
+                fuel.getDateHour(),
+                fuel.getTotalValue(),
+                fuel.getNumberReceipt()
         );
     }
 }

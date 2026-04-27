@@ -5,16 +5,16 @@ import com.example.AtlazDB.model.Vehicle;
 
 public record VehicleResponseDTO(
         Long id,
-        String prefixo,
-        TipoViatura tipo,
-        Long idModelo
+        String prefix,
+        TipoViatura type,
+        Long idModel
 ) {
     // Construtor para converter a Entidade em DTO
     public VehicleResponseDTO(Vehicle vehicle) {
         this(
                 vehicle.getId(),
-                vehicle.getPrefixo(),
-                vehicle.getTipo(),
+                vehicle.getPrefix(),
+                vehicle.getType(),
                 vehicle.getModel().getId()
         );
     }

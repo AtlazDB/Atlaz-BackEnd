@@ -24,20 +24,20 @@ public class Fuel {
     @Column(name = "km_atual")
     private BigDecimal currentKm;
 
-    private BigDecimal litros;
+    private BigDecimal liters;
 
     @Column(name = "valor_total")
-    private BigDecimal valorTotal;
+    private BigDecimal totalValue;
 
     @Column(name = "tipo_combustivel")
     @Enumerated(EnumType.STRING)
     private TypeFuel typeFuel;
 
     @Column(name = "numero_nota_fiscal")
-    private String numeroNotaFiscal;
+    private String numberReceipt;
 
     @Column(name = "observacao_estado")
-    private String observacaoEstado;
+    private String observationStatus;
 
     @ManyToOne
     @JoinColumn(name = "id_usuario")

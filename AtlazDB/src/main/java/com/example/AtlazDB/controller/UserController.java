@@ -18,7 +18,7 @@ import com.example.AtlazDB.dto.UserResponseDTO;
 import com.example.AtlazDB.service.UserService;
 
 @RestController
-@RequestMapping("/usuarios")
+@RequestMapping("/users")
 public class UserController {
 
     private final UserService service;
@@ -40,7 +40,7 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<UserResponseDTO> searchById(@PathVariable Long id) {
-        return service.buscarPorId(id)
+        return service.searchById(id)
                 .map(UserResponseDTO::new)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());

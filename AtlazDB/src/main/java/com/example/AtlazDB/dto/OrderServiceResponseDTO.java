@@ -8,27 +8,27 @@ import java.time.LocalDateTime;
 
 public record OrderServiceResponseDTO(
         Long id,
-        TypeOccurrence tipoServico,
-        String localDestino,
-        String justificativa,
-        String requisitante,
-        BigDecimal kmSaida,
-        BigDecimal kmChegada,
-        LocalDateTime dataSaida,
-        LocalDateTime dataRetorno
+        TypeOccurrence typoService,
+        String localDestiny,
+        String justification,
+        String requisition,
+        BigDecimal leaveKm,
+        BigDecimal arriveKm,
+        LocalDateTime leaveDate,
+        LocalDateTime returnDate
 ) {
-    // Construtor para converter a Entidade em DTO
+
     public OrderServiceResponseDTO(OrderService orderService) {
         this(
                 orderService.getId(),
-                orderService.getTipoServico(),
-                orderService.getLocalDestino(),
-                orderService.getJustificativa(),
-                orderService.getRequisitante(),
-                orderService.getKmSaida(),
-                orderService.getKmChegada(),
-                orderService.getDataSaida(),
-                orderService.getDataRetorno()
+                orderService.getTypeService(),
+                orderService.getLocalDestiny(),
+                orderService.getJustification(),
+                orderService.getRequisition(),
+                orderService.getLeaveKm(),
+                orderService.getArriveKm(),
+                orderService.getLeaveDate(),
+                orderService.getReturnDate()
         );
     }
 }

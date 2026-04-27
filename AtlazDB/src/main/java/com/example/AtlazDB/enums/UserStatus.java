@@ -1,6 +1,6 @@
 package com.example.AtlazDB.enums;
 
-public enum UsuarioStatus {
+public enum UserStatus {
     ATIVO,
     INATIVO
 }

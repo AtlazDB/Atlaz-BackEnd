@@ -22,28 +22,28 @@ public class OrderService {
 
     @Column(name = "tipo_servico")
     @Enumerated(EnumType.STRING)
-    private TypeOccurrence tipoServico;
+    private TypeOccurrence typeService;
 
     @Column(name = "local_destino")
-    private String localDestino;
+    private String localDestiny;
 
-    @Column(name = "justificativa")
-    private String justificativa;
+    @Column(name = "justification")
+    private String justification;
 
-    @Column(name = "requisitante")
-    private String requisitante;
+    @Column(name = "requisition")
+    private String requisition;
 
     @Column(name = "km_saida")
-    private BigDecimal kmSaida;
+    private BigDecimal leaveKm;
 
     @Column(name = "km_chegada")
-    private BigDecimal kmChegada;
+    private BigDecimal arriveKm;
 
     @Column(name = "data_saida")
-    private LocalDateTime dataSaida;
+    private LocalDateTime leaveDate;
 
     @Column(name = "data_retorno")
-    private LocalDateTime dataRetorno;
+    private LocalDateTime returnDate;
 
     @ManyToOne
     @JoinColumn(name = "id_usuario")

@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.AtlazDB.dto.ViaturaRequestDTO;
+import com.example.AtlazDB.dto.VehicleRequestDTO;
 import com.example.AtlazDB.dto.VehicleResponseDTO;
 import com.example.AtlazDB.service.VehicleService;
 
 @RestController
-@RequestMapping("/viaturas")
+@RequestMapping("/vehicles")
 public class VehicleController {
 
     private final VehicleService service;
@@ -29,7 +29,7 @@ public class VehicleController {
 
     @GetMapping
     public ResponseEntity<List<VehicleResponseDTO>> list() {
-        List<Vehicle> list = service.listarTodos();
+        List<Vehicle> list = service.listAll();
         
         List<VehicleResponseDTO> dtoList = list.stream()
                 .map(VehicleResponseDTO::new)
@@ -47,13 +47,13 @@ public class VehicleController {
     }
 
     @PostMapping
-    public ResponseEntity<VehicleResponseDTO> create(@RequestBody ViaturaRequestDTO dto) {
+    public ResponseEntity<VehicleResponseDTO> create(@RequestBody VehicleRequestDTO dto) {
         Vehicle saved = service.save(dto);
         return ResponseEntity.ok(new VehicleResponseDTO(saved));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<VehicleResponseDTO> update(@PathVariable Long id, @RequestBody ViaturaRequestDTO dto) {
+    public ResponseEntity<VehicleResponseDTO> update(@PathVariable Long id, @RequestBody VehicleRequestDTO dto) {
         Vehicle updated = service.update(id, dto);
         return ResponseEntity.ok(new VehicleResponseDTO(updated));
     }

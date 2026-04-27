@@ -4,14 +4,14 @@ import com.example.AtlazDB.model.City;
 
 public record CityResponseDTO(
         Long id,
-        String nome,
+        String name,
         String uf
 ) {
     // Construtor para converter a Entidade em DTO
     public CityResponseDTO(City city) {
         this(
                 city.getId(),
-                city.getNome(),
+                city.getName(),
                 city.getUf()
         );
     }

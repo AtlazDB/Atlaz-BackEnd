@@ -21,11 +21,11 @@ import com.example.AtlazDB.enums.TypeFuel;
 import com.example.AtlazDB.service.FuelService;
 
 @RestController
-@RequestMapping("/abastecimentos")
+@RequestMapping("/refueling")
 public class FuelController {
 
     private final FuelService service;
-//    private final CreateCsv gerarCsv;
+//    private final CreateCsv createCsv;
 
     public FuelController(FuelService service, CreateCsv createCsv) {
         this.service = service;

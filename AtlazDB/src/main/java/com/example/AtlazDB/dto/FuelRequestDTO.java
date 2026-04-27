@@ -9,13 +9,13 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class FuelRequestDTO {
-    private LocalDateTime dataHora;
-    private BigDecimal litros;
-    private BigDecimal valorTotal;
-    private String numeroNotaFiscal;
-    private Long idUsuario;
-    private Long idViatura;
-    private Long idCidade;
+    private LocalDateTime dateHour;
+    private BigDecimal liters;
+    private BigDecimal totalValue;
+    private String numberReceipt;
+    private Long idUser;
+    private Long idVehicle;
+    private Long idCity;
     private Long idOs;
 
 }

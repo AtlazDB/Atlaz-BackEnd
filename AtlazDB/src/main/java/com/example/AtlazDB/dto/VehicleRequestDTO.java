@@ -6,9 +6,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ViaturaRequestDTO {
+public class VehicleRequestDTO {
 
-    private String prefixo;
-    private TipoViatura tipo;
-    private Long idModelo;
+    private String prefix;
+    private TipoViatura type;
+    private Long idModel;
 }

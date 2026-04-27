@@ -6,6 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CityRequestDTO {
-    private String nome;
+    private String name;
     private String uf;
 }

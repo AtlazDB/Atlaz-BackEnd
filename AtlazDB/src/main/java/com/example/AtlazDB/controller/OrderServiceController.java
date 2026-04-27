@@ -25,7 +25,7 @@ import com.example.AtlazDB.service.CreateCsv;
 import com.example.AtlazDB.service.OrderServiceService;
 
 @RestController
-@RequestMapping("/ordens-servico")
+@RequestMapping("/service-orders")
 public class OrderServiceController {
 
     private final OrderServiceService service;

@@ -7,10 +7,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UserRequestDTO {
-    private String nome;
-    private String matricula;
+    private String name;
+    private String registration;
     private String email;
-    private String senhaHash;
-    private Perfil perfil;
-    private String usuarioStatus;
+    private String passwordHash;
+    private Perfil profile;
+    private String userStatus;
 }

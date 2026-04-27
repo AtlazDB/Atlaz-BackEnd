@@ -14,9 +14,9 @@ public class Model {
     private Long id;
 
     @Column(name = "nome_modelo")
-    private String nomeModelo;
+    private String nameModel;
 
     @Column(name = "nome_marca")
-    private String nomeMarca;
+    private String nameBrand;
 
 }
