@@ -4,8 +4,10 @@ import com.example.AtlazDB.dto.VehicleRequestDTO;
 import com.example.AtlazDB.dto.VehicleResponseDTO;
 import com.example.AtlazDB.enums.VehicleStatus;
 import com.example.AtlazDB.model.Model;
+import com.example.AtlazDB.model.ServiceOrder;
 import com.example.AtlazDB.model.Vehicle;
 import com.example.AtlazDB.repository.ModelRepository;
+import com.example.AtlazDB.repository.ServiceOrderRepository;
 import com.example.AtlazDB.repository.VehicleRepository;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +18,12 @@ public class VehicleService {
 
     private final VehicleRepository repository;
     private final ModelRepository modelRepository;
+    private final ServiceOrderRepository serviceOrderRepository;
 
-    public VehicleService(VehicleRepository repository, ModelRepository modelRepository) {
+    public VehicleService(VehicleRepository repository, ModelRepository modelRepository, ServiceOrderRepository serviceOrderRepository) {
         this.repository = repository;
         this.modelRepository = modelRepository;
+        this.serviceOrderRepository = serviceOrderRepository;
     }
 
     public List<VehicleResponseDTO> listAll() {
@@ -48,7 +52,7 @@ public class VehicleService {
         vehicle.setModel(model);
 
         vehicle.setVehicleStatus(VehicleStatus.DISPONIVEL);
-        vehicle.setKm(0.0);
+        vehicle.setKm(dto.getKm() != null ? dto.getKm() : 0.0);
 
         Vehicle saved = repository.save(vehicle);
 
@@ -76,4 +80,15 @@ public class VehicleService {
 
         return new VehicleResponseDTO(updated);
     }
+    public void updateCurrentKm(Long vehicleId) {
+    ServiceOrder last = serviceOrderRepository
+            .findTopByVehicle_IdAndReturnDateIsNotNullOrderByReturnDateDesc(vehicleId);
+
+    if (last != null && last.getArrivalKm() != null) {
+        Vehicle vehicle = repository.findById(vehicleId)
+                .orElseThrow(() -> new RuntimeException("Vehicle not found"));
+        vehicle.setKm(last.getArrivalKm().doubleValue());
+        repository.save(vehicle);
+    }
+}
 }

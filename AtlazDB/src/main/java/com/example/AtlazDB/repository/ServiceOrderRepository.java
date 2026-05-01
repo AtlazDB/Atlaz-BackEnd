@@ -33,4 +33,6 @@ public interface ServiceOrderRepository extends JpaRepository<ServiceOrder, Long
         WHERE DATE(os.data_saida) = CURRENT_DATE
         """, nativeQuery = true)
     List<AtividadeProjection> findOrdensDeHoje();
+
+    ServiceOrder findTopByVehicle_IdAndReturnDateIsNotNullOrderByReturnDateDesc(Long viaturaId);
 }
