@@ -3,9 +3,14 @@ package com.example.AtlazDB.model;
 import jakarta.persistence.*;
 import com.example.AtlazDB.enums.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
 @Entity
 @Table(name = "viatura")
 @Data
+@Getter
+@Setter
 public class Vehicle {
 
     @Id
@@ -31,4 +36,10 @@ public class Vehicle {
     @Column(name = "tipo_abastecimento", nullable = false)
     @Enumerated(EnumType.STRING)
     private FuelType fuelType;
+
+    @Column(name = "km_atual")
+    private Double km;
+
+
+
 }

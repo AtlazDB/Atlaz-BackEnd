@@ -21,10 +21,10 @@ public class RefuelingResponseDTO {
 
     public static RefuelingResponseDTO fromEntity(Refueling refueling) {
         return new RefuelingResponseDTO(
-                refueling.getId(),
-                refueling.getDateTime(),
-                refueling.getTotalValue(),
-                refueling.getReceiptNumber()
+            refueling.getId(),
+            refueling.getDateTime(),
+            refueling.getTotalValue(),
+            refueling.getReceiptNumber()
         );
     }
 }
