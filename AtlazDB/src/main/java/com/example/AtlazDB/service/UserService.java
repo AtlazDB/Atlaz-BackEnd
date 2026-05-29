@@ -22,6 +22,7 @@ public class UserService {
         this.serviceOrderRepository = serviceOrderRepository;
     }
 
+
     public List<User> listAll() {
         return repository.findAll();
     }
@@ -43,6 +44,7 @@ public class UserService {
         user.setUserStatus(UserStatus.valueOf(dto.getUserStatus()));
         } else {
         user.setUserStatus(UserStatus.DISPONIVEL);
+        }
         user.setCnhTypes(dto.getCnhTypes());
 
         return repository.save(user);
@@ -52,7 +54,7 @@ public class UserService {
         repository.deleteById(id);
     }
 
-    public User update(Long id, UserRequestDTO dto) {
+public User update(Long id, UserRequestDTO dto) {
         User user = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 

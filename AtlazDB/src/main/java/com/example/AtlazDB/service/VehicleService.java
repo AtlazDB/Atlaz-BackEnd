@@ -146,7 +146,7 @@ public class VehicleService {
             repository.save(vehicle);
         }
     }
-}
+
 
 public Double calculateAverageConsumption(Long id) {
         // 1. Busque a viatura ou os abastecimentos atrelados a esse ID
