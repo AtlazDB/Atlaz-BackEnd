@@ -7,6 +7,9 @@ import com.example.AtlazDB.service.RefuelingService;
 import com.example.AtlazDB.service.GenerateCsv;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.example.AtlazDB.model.ServiceOrder;
@@ -66,16 +69,28 @@ public class ServiceOrderController {
 
     @GetMapping("/csv")
     public ResponseEntity<byte[]> downloadCSV(
+            @RequestParam(required = false) LocalDate dataInicio,
+            @RequestParam(required = false) LocalDate dataFim,
             @RequestParam(required = false) Integer month,
-            @RequestParam(required = false) Integer year) {
+            @RequestParam(required = false) Integer year,
+            @RequestParam(required = false) String categoria) {
 
-        List<ServiceOrder> orders = (month != null && year != null)
-                ? service.findByMonthAndYear(month, year)
-                : service.listAll();
+        List<ServiceOrder> orders;
+        List<Refueling> refuelings;
 
-        List<Refueling> refuelings = (month != null && year != null)
-                ? refuelingService.findByMonthAndYear(month, year)
-                : refuelingService.listAll();
+        if (dataInicio != null && dataFim != null) {
+            orders = service.findByInterval(dataInicio, dataFim);
+            refuelings = refuelingService.findByInterval(dataInicio, dataFim);
+        } else if (month != null && year != null) {
+            orders = service.findByMonthAndYear(month, year);
+            refuelings = refuelingService.findByMonthAndYear(month, year);
+        } else {
+            orders = service.listAll();
+            refuelings = refuelingService.listAll();
+        }
+
+        if ("abastecimento".equals(categoria)) orders = new ArrayList<>();
+        if ("os".equals(categoria)) refuelings = new ArrayList<>();
 
         byte[] csvBytes = generateCsv.generateCSV(orders, refuelings);
 
@@ -84,11 +99,20 @@ public class ServiceOrderController {
                 .header("Content-Type", "text/csv; charset=UTF-8")
                 .body(csvBytes);
     }
-
     @GetMapping("/by-month")
     public ResponseEntity<List<ServiceOrder>> findByMonth(
             @RequestParam int month,
             @RequestParam int year) {
         return ResponseEntity.ok(service.findByMonthAndYear(month, year));
+    }
+
+    @GetMapping("/count-by-interval")
+    public ResponseEntity<Long> countByInterval(
+            @RequestParam LocalDate dataInicio,
+            @RequestParam LocalDate dataFim) {
+        
+        Long total = service.countServiceOrdersByDateInterval(dataInicio, dataFim);
+        
+        return ResponseEntity.ok(total);
     }
 }

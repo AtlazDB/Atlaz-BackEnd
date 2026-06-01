@@ -16,6 +16,8 @@ import com.example.AtlazDB.repository.ServiceOrderRepository;
 import com.example.AtlazDB.repository.UserRepository;
 import com.example.AtlazDB.repository.VehicleRepository;
 
+import java.time.LocalDate;
+
 @Service
 public class ServiceOrderService {
 
@@ -147,5 +149,20 @@ public class ServiceOrderService {
         vehicleService.updateCurrentKm(updated.getVehicle().getId());
 
         return updated;
+    }
+    
+    public Long countServiceOrdersByDateInterval(LocalDate dataInicio, LocalDate dataFim) {
+        // Pega do primeiro segundo do dia de início até o último segundo do dia de fim
+        LocalDateTime startOfDay = dataInicio.atStartOfDay();
+        LocalDateTime endOfDay = dataFim.atTime(java.time.LocalTime.MAX);
+        
+        // Conta os registros na tabela ordem_servico
+        return repository.countByDepartureDateBetween(startOfDay, endOfDay);
+    }
+
+    public List<ServiceOrder> findByInterval(LocalDate dataInicio, LocalDate dataFim) {
+        LocalDateTime start = dataInicio.atStartOfDay();
+        LocalDateTime end = dataFim.atTime(23, 59, 59);
+        return repository.findByPeriod(start, end);
     }
 }

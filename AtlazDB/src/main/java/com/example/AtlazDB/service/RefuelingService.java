@@ -6,6 +6,7 @@ import com.example.AtlazDB.model.*;
 import com.example.AtlazDB.repository.*;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -39,38 +40,39 @@ public class RefuelingService {
         return repository.findById(id);
     }
 
-   public Refueling save(RefuelingRequestDTO dto) {
-    User user = userRepository.findById(dto.getUserId())
-            .orElseThrow(() -> new RuntimeException("User not found."));
-    Vehicle vehicle = vehicleRepository.findById(dto.getVehicleId())
-            .orElseThrow(() -> new RuntimeException("Vehicle not found."));
-    City city = cityRepository.findById(dto.getCityId())
-            .orElseThrow(() -> new RuntimeException("City not found."));
+    public Refueling save(RefuelingRequestDTO dto) {
+        User user = userRepository.findById(dto.getUserId())
+                .orElseThrow(() -> new RuntimeException("User not found."));
+        Vehicle vehicle = vehicleRepository.findById(dto.getVehicleId())
+                .orElseThrow(() -> new RuntimeException("Vehicle not found."));
+        City city = cityRepository.findById(dto.getCityId())
+                .orElseThrow(() -> new RuntimeException("City not found."));
 
-    // serviceOrder é opcional
-    ServiceOrder serviceOrder = null;
-    if (dto.getServiceOrderId() != null) {
-        serviceOrder = serviceOrderRepository.findById(dto.getServiceOrderId())
-                .orElseThrow(() -> new RuntimeException("Service order not found."));
+        // serviceOrder é opcional
+        ServiceOrder serviceOrder = null;
+        if (dto.getServiceOrderId() != null) {
+            serviceOrder = serviceOrderRepository.findById(dto.getServiceOrderId())
+                    .orElseThrow(() -> new RuntimeException("Service order not found."));
+        }
+
+        Refueling refueling = new Refueling();
+        refueling.setTotalValue(dto.getTotalValue());
+        refueling.setLiters(dto.getLiters());
+        refueling.setDateTime(dto.getDateTime());
+        refueling.setReceiptNumber(dto.getReceiptNumber());
+        refueling.setUser(user);
+        refueling.setVehicle(vehicle);
+        refueling.setCity(city);
+        refueling.setServiceOrder(serviceOrder);
+
+        // currentKm só se tiver OS com chegada registrada
+        if (serviceOrder != null && serviceOrder.getArrivalKm() != null) {
+            refueling.setCurrentKm(serviceOrder.getArrivalKm());
+        }
+
+        return repository.save(refueling);
     }
-
-    Refueling refueling = new Refueling();
-    refueling.setTotalValue(dto.getTotalValue());
-    refueling.setLiters(dto.getLiters());
-    refueling.setDateTime(dto.getDateTime());
-    refueling.setReceiptNumber(dto.getReceiptNumber());
-    refueling.setUser(user);
-    refueling.setVehicle(vehicle);
-    refueling.setCity(city);
-    refueling.setServiceOrder(serviceOrder);
-
-    // currentKm só se tiver OS com chegada registrada
-    if (serviceOrder != null && serviceOrder.getArrivalKm() != null) {
-        refueling.setCurrentKm(serviceOrder.getArrivalKm());
-    }
-
-    return repository.save(refueling);
-}
+    
     public void delete(Long id) {
         repository.deleteById(id);
     }
@@ -112,7 +114,7 @@ public class RefuelingService {
         }
 
         refueling.setTotalValue(dto.getTotalValue());
-        refueling.setCurrentKm(serviceOrder.getArrivalKm());
+        refueling.setCurrentKm(serviceOrder != null ? serviceOrder.getArrivalKm() : null);
         refueling.setLiters(dto.getLiters());
         refueling.setDateTime(dto.getDateTime());
         refueling.setReceiptNumber(dto.getReceiptNumber());
@@ -135,4 +137,19 @@ public class RefuelingService {
 
         return repository.findByPeriod(start, end);
     }
+
+    public Long countRefuelingsByDateInterval(LocalDate startDate, LocalDate endDate) {
+        LocalDateTime startOfDay = startDate.atStartOfDay();
+        
+        LocalDateTime endOfDay = endDate.atTime(java.time.LocalTime.MAX);
+        
+        return repository.countByDateTimeBetween(startOfDay, endOfDay);
+    }
+
+    public List<Refueling> findByInterval(LocalDate dataInicio, LocalDate dataFim) {
+        LocalDateTime start = dataInicio.atStartOfDay();
+        LocalDateTime end = dataFim.atTime(23, 59, 59);
+        return repository.findByPeriod(start, end);
+    }
+
 }
